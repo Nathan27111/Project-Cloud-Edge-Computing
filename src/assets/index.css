@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-primary-dark text-secondary font-comfortaa;
+}
+
+.btn {
+    @apply px-20 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase;
+}
+
+.title {
+    @apply text-center text-4xl px-2 pt-16 mb-16 bg-no-repeat bg-top;
+    background-image: url("./logo.svg");
+    background-size: 2.5rem;
+}
+
+.input {
+    @apply p-3 m-4 rounded-lg text-center text-primary-dark;
+}
+
+label {
+    margin-left: 1rem;
+}
