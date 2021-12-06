@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="round-collapse" @click="collapse" :class="{'active-round': isCollapsed}">
+        <div class="round-collapse" @click="collapse" :class="{'active-round': !isCollapsed}">
             <h1 v-html="title"></h1>
         </div>
         <div class="round-content">
