@@ -14,7 +14,12 @@
       <input type="number" class="input" id="score" name="score" placeholder="7" required>
 
       <label for="player-count">Amount of players</label>
-      <input type="number" class="input" id="player-count" name="player-count" placeholder="10" required>
+      <select name="player-count" id="player-count" class="input" required>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="8">8</option>
+        <option value="16">16</option>
+      </select>
 
       <label for="tables">Amount of tables</label>
       <input type="number" class="input" id="tables" name="tables" placeholder="3" required>

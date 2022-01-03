@@ -23,3 +23,44 @@ body {
 label {
     margin-left: 1rem;
 }
+
+/* Tournament bracket */
+
+.tournament-bracket-item {
+    @apply  w-5/6 h-auto text-center mx-auto flex flex-col bg-primary-light p-3 rounded-sm shadow-lg mb-3
+}
+
+.tournament-bracket-item-row {
+    @apply grid grid-flow-col grid-cols-3
+}
+
+.score-player {
+    @apply px-1 inline-block bg-secondary text-primary-dark 
+}
+
+.first-score::after {
+    content: ":";
+    padding-left: 0.75rem;
+}
+
+.round-collapse {
+    @apply mb-2 w-5/6 mx-auto flex justify-between px-2 rounded-sm bg-tertiary-dark
+}
+
+.round-collapse::after {
+    content: "\002B";
+}
+
+.active-round {
+    @apply bg-tertiary-light
+}
+
+.active-round::after {
+    content: "\2212";
+}
+
+.round-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
