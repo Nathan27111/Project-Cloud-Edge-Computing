@@ -1,6 +1,6 @@
 export default {
     created() {
-        if (!localStorage.username) {
+        if (!localStorage.username && !localStorage.code) {
             this.$router.push("/login");
         }
     }
