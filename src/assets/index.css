@@ -11,9 +11,13 @@ body {
 }
 
 .title {
-    @apply text-center text-4xl px-2 pt-16 mb-16 bg-no-repeat bg-top;
+    @apply text-center text-4xl px-2 pt-16 mb-2 bg-no-repeat bg-top;
     background-image: url("./logo.svg");
     background-size: 2.5rem;
+}
+
+.tournament-code {
+    @apply mb-6 text-2xl text-center;
 }
 
 .input {
@@ -24,10 +28,14 @@ label {
     margin-left: 1rem;
 }
 
+.error-message {
+    @apply text-tertiary-dark
+}
+
 /* Tournament bracket */
 
 .tournament-bracket-item {
-    @apply  w-5/6 h-auto text-center mx-auto flex flex-col bg-primary-light p-3 rounded-sm shadow-lg mb-3
+    @apply w-5/6 h-auto text-center mx-auto flex flex-col bg-primary-light p-3 rounded-sm shadow-lg mb-3
 }
 
 .tournament-bracket-item-row {
@@ -35,7 +43,7 @@ label {
 }
 
 .score-player {
-    @apply px-1 inline-block bg-secondary text-primary-dark 
+    @apply px-1 inline-block bg-secondary text-primary-dark
 }
 
 .first-score::after {
@@ -63,4 +71,17 @@ label {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+/* CREATE TOURNAMENT FORM */
+.table-inputs {
+    @apply flex flex-col
+}
+
+.table-input-btn {
+    position: relative;
+}
+
+.table-inputs-btn {
+    @apply bg-secondary px-3 py-1 rounded-full text-primary-dark font-bold text-center absolute right-0 shadow-md;
 }

@@ -1,6 +1,10 @@
 <template>
   <div class="flex flex-col justify-evenly items-center mt-16">
-    <h1 class="title">Airhockey Tournament</h1>
+    <div>
+      <h1 class="title">{{ tournamentName }}</h1>
+      <h2 class="tournament-code">Code: {{ code }}</h2>
+    </div>
+
     <div id="round-1" class="w-full">
       <TournamentBracketRound :title="'Round 1'" />
     </div>
@@ -20,6 +24,21 @@ import TournamentBracketRound from "../components/TournamentBracketRound.vue";
 
 export default {
     mixins: [authRedirect],
+
+    data() {
+      return {
+        code: "XXXXXX",
+        tournamentName: "Airhockey Tournament",
+      }
+    },
+
+    created() {
+      if (localStorage.getItem("tournament") != null) {
+        let tournament = JSON.parse(localStorage.getItem("tournament"));
+        this.tournamentName = tournament.name;
+        this.code = tournament.code;
+      }
+    },
 
     components: {
       TournamentBracketRound,
