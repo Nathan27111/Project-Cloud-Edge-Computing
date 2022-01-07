@@ -20,6 +20,12 @@ const routes = [
             import("../views/Create.vue"),
     },
     {
+        path: "/lobby",
+        name: "Lobby",
+        component: () =>
+            import("../views/Lobby.vue"),
+    },
+    {
         path: "/",
         name: "Home",
         component: () =>

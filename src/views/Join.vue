@@ -62,7 +62,7 @@ export default {
 
       const tournament = await axios.get(process.env.VUE_APP_URL + "/tournaments/" + code);
       localStorage.setItem("tournament", JSON.stringify(tournament.data.data));
-       this.$router.push("/");
+      this.$router.push("/lobby");
     },
   },
 };

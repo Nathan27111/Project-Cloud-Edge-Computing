@@ -34,10 +34,9 @@ export default {
 
     created() {
       if (localStorage.getItem("tournament") != null) {
-        let tournament = localStorage.getItem("tournament");
+        let tournament = JSON.parse(localStorage.getItem("tournament"));
         this.tournamentName = tournament.name;
         this.code = tournament.code;
-        console.log(this.code);
       }
     },
 
