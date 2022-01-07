@@ -23,6 +23,7 @@
 </template>
 
 <script>
+//import axios from 'axios';
 export default {
   data() {
     return {
@@ -31,6 +32,7 @@ export default {
   },
   methods: {
     join() {
+
       localStorage.username = this.username;
       this.$router.push("/");
     },
