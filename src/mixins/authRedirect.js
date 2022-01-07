@@ -1,6 +1,6 @@
 export default {
     created() {
-        if (!localStorage.username && !localStorage.code) {
+        if (!localStorage.tournament) {
             this.$router.push("/login");
         }
     }

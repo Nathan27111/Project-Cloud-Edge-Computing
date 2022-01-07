@@ -97,11 +97,10 @@ export default {
       })
       .then((res) => {
         console.log(res.data);
-        localStorage.setItem("code", res.data.data.code);
+        localStorage.setItem("tournament", res.data.data);
         this.$router.push("/join");
       })
       .catch((err) => console.error(err));
-
     },
     addTableInput() {
       this.numberOfTables += 1;

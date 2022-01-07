@@ -11,9 +11,13 @@ body {
 }
 
 .title {
-    @apply text-center text-4xl px-2 pt-16 mb-16 bg-no-repeat bg-top;
+    @apply text-center text-4xl px-2 pt-16 mb-2 bg-no-repeat bg-top;
     background-image: url("./logo.svg");
     background-size: 2.5rem;
+}
+
+.tournament-code {
+    @apply mb-6 text-2xl text-center;
 }
 
 .input {
