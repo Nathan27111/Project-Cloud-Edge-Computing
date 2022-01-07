@@ -97,7 +97,7 @@ export default {
       })
       .then((res) => {
         console.log(res.data);
-        localStorage.setItem("tournament", JSON.parse(res.data.data));
+        localStorage.setItem("tournament", JSON.stringify(res.data.data));
         this.$router.push("/");
       })
       .catch((err) => console.error(err));

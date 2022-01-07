@@ -42,19 +42,15 @@ export default {
   },
 
   methods: {
-    join() {
+    async join() {
+      const code = localStorage.getItem("code");
       const body = JSON.stringify({
         nickname: this.nickname,
         ranking: 1,
-        code: localStorage.getItem("code")
+        code: code
       })
-      axios.post(process.env.VUE_APP_URL + "/players", body, {
+      const player = await axios.post(process.env.VUE_APP_URL + "/players", body, {
         headers: {'content-type': 'application/json'}
-      }).then((res) => {
-        console.log(res);
-        localStorage.setItem("player", JSON.parse(res.data.data));
-        // Another axios to get tournament based on res.data.data.tournamentId, use await with this
-        this.$router.push("/");
       }).catch((err) => {
         this.showError = true;
         setTimeout(() => {
@@ -62,8 +58,11 @@ export default {
         }, 3000)
         console.error(err);
       })
-      localStorage.nickname = this.nickname;
-      this.$router.push("/");
+      localStorage.setItem("player", JSON.stringify(player.data.data));
+
+      const tournament = await axios.get(process.env.VUE_APP_URL + "/tournaments/" + code);
+      localStorage.setItem("tournament", JSON.stringify(tournament.data.data));
+       this.$router.push("/");
     },
   },
 };
