@@ -1,6 +1,10 @@
 <template>
   <div class="flex flex-col justify-evenly items-center mt-16">
     <h1 class="title">Airhockey Tournament</h1>
+    
+    <div v-if="showError" class="error-message">
+      <p>Some tables do not exist or are already beeing used in another tournament!</p>
+    </div>
 
     <form
       action="#"
@@ -46,7 +50,7 @@
         <option value="16">16</option>
       </select>
 
-      <label for="tables">Entering Tables</label>
+      <label for="tables">Entering Table numbers</label>
       <div class="table-inputs">
         <div class="table-input-btn">
           <button @click.prevent="addTableInput()" class="table-inputs-btn">
@@ -81,8 +85,10 @@ export default {
       amountOfPlayers: 0,
       numberOfTables: 1,
       tables: [],
+      showError: false,
     };
   },
+  
   methods: {
     create() {
       const body = JSON.stringify({
@@ -98,9 +104,16 @@ export default {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("tournament", JSON.stringify(res.data.data));
+        localStorage.setItem("creator", "true");
         this.$router.push("/");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 3000)
+      });
     },
     addTableInput() {
       this.numberOfTables += 1;
