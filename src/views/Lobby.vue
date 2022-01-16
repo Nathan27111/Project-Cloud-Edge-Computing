@@ -82,7 +82,7 @@ export default {
       async refresh() {
         const localTournament = JSON.parse(localStorage.getItem("tournament"));
         const tournament = await axios.get(process.env.VUE_APP_URL + "/tournaments/" + localTournament.code).catch((err) => console.log(err));
-        const players = await axios.get(process.env.VUE_APP_URL + "/players/tournaments/" + localTournament.id + "?tournamentId=" + localTournament.id).catch((err) => console.log(err));
+        const players = await axios.get(process.env.VUE_APP_URL + "/players/tournaments/" + localTournament.id).catch((err) => console.log(err));
 
         if (players === undefined) {
           this.playersJoined = 0;

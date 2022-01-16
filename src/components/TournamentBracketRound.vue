@@ -1,12 +1,10 @@
 <template>
     <div>
         <div class="round-collapse" @click="collapse" :class="{'active-round': !isCollapsed}">
-            <h1 v-html="title"></h1>
+            <h1>Round {{round}}</h1>
         </div>
         <div class="round-content">
-            <TournamentBracketElement />
-            <TournamentBracketElement />
-            <TournamentBracketElement />
+            <TournamentBracketElement v-for="game in games" :key="game.id" :game="game"/>
         </div>
         
     </div>
@@ -21,11 +19,12 @@ export default {
             isCollapsed: {
                 type: Boolean,
                 default: false,
-            },
+            }
         }
     },
     props: {
-        title: String,
+        games: Array,
+        round: Number,
     },
     components: {
         TournamentBracketElement,
