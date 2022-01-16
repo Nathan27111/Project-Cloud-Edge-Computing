@@ -2,7 +2,7 @@
   <div class="flex flex-col justify-evenly items-center mt-16">
     <div>
       <h1 class="title">{{ tournamentName }}</h1>
-      <h2 class="tournament-code">Code: {{ code }}</h2>
+      <h2 class="tournament-code">Code: <span class="text-tertiary-light font-bold">{{ code }}</span></h2>
     </div>
 
     <div class="w-full">
@@ -41,12 +41,16 @@ export default {
         this.tournamentId = tournament.id;
       }
       this.getGames();
+      setInterval(() => {
+        this.getGames();
+      }, 20000)
     },
 
     methods: {
       getGames() {
         axios.get(process.env.VUE_APP_URL + "/games/tournaments/" + this.tournamentId)
         .then((res) => {
+          this.rounds = {};
           for (let i = 0; i < res.data.data.length; i++) {
             let roundIndex = res.data.data[i].round;
             if (this.rounds[roundIndex] === undefined) {

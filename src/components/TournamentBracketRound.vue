@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-bind:id="'round-' + round">
         <div class="round-collapse" @click="collapse" :class="{'active-round': !isCollapsed}">
             <h1>Round {{round}}</h1>
         </div>
@@ -32,7 +32,8 @@ export default {
     methods: {
         collapse() {
             this.isCollapsed = !this.isCollapsed;
-            let content = document.querySelector(".round-content");
+            let query = "#round-" + this.round + " .round-content";
+            let content = document.querySelector(query);
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
             } else {

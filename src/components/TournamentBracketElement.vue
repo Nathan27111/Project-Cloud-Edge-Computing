@@ -28,9 +28,9 @@
       <h2>{{isStarted}}</h2>
       <div class="faults-player-2">
         <ul class="flex justify-center">
-          <li>{{game.faultsPlayerOne > 0 ? 'x' : 'o'}}</li>
-          <li>{{game.faultsPlayerOne > 1 ? 'x' : 'o'}}</li>
-          <li>{{game.faultsPlayerOne > 2 ? 'x' : 'o'}}</li>
+          <li>{{game.faultsPlayerTwo > 0 ? 'x' : 'o'}}</li>
+          <li>{{game.faultsPlayerTwo > 1 ? 'x' : 'o'}}</li>
+          <li>{{game.faultsPlayerTwo > 2 ? 'x' : 'o'}}</li>
         </ul>
       </div>
     </div>
