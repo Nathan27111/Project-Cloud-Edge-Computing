@@ -12,10 +12,20 @@
     </div>
     <div class="w-full">
         <div class="flex justify-center w-11/12 max-w-lg m-auto">
-          <button class="px-10 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase">Rules</button>
+          <button @click="toggleRules" class="px-10 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase">Rules</button>
           <button class="px-10 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase">Leave</button>
         </div>
-      </div>    
+    </div>    
+    <div class="rules-overlay" v-if="showRules" @click="toggleRules">
+      <div class="rules">
+        <h1 class="font-bold mb-3">Airhockey Rules</h1>
+        <ul class="list-disc text-sm">
+          <li>First to score 7 goals wins</li>
+          <li>When you cross the middle line with your puck, you get a strike</li>
+          <li>Three strikes and you lose</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,6 +47,7 @@ export default {
         code: "XXXXXX",
         tournamentName: "Airhockey Tournament",
         tournamentId: 0,
+        showRules: false,
         rounds: {},
       }
     },
@@ -68,6 +79,9 @@ export default {
             }
           }
         }).catch((err) => console.log(err));
+      },
+      toggleRules() {
+        this.showRules = !this.showRules;
       }
     },
 };

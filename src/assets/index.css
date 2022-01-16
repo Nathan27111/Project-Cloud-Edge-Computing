@@ -68,6 +68,20 @@ label {
     transition: max-height 0.2s ease-out;
 }
 
+.rules-overlay {
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    @apply fixed w-full h-full top-0 bottom-0 left-0 right-0;
+}
+
+.rules {
+    @apply h-3/5 w-4/5 max-w-xs bg-primary-dark mx-auto my-14 rounded-xl p-6 text-center;
+}
+
+.rules ul li {
+    @apply mb-2;
+}
+
 /* CREATE TOURNAMENT FORM */
 .table-inputs {
     @apply flex flex-col
