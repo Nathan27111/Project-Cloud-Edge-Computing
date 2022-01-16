@@ -1,13 +1,21 @@
 <template>
-  <div class="flex flex-col justify-evenly items-center mt-16">
-    <div>
-      <h1 class="title">{{ tournamentName }}</h1>
-      <h2 class="tournament-code">Code: <span class="text-tertiary-light font-bold">{{ code }}</span></h2>
-    </div>
+  <div class="h-screen flex justify-between flex-col">
+    <div class="flex flex-col justify-evenly items-center mt-16">
+      <div>
+        <h1 class="title">{{ tournamentName }}</h1>
+        <h2 class="tournament-code">Code: <span class="text-tertiary-light font-bold">{{ code }}</span></h2>
+      </div>
 
-    <div class="w-full">
-      <TournamentBracketRound v-for="(games, index) in rounds" :key="index" :round="index" :games="games"/>
+      <div class="w-11/12 max-w-lg">
+        <TournamentBracketRound v-for="(games, index) in rounds" :key="index" :round="index" :games="games"/>
+      </div>
     </div>
+    <div class="w-full">
+        <div class="flex justify-center w-11/12 max-w-lg m-auto">
+          <button class="px-10 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase">Rules</button>
+          <button class="px-10 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase">Leave</button>
+        </div>
+      </div>    
   </div>
 </template>
 
