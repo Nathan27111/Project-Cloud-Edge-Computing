@@ -24,7 +24,7 @@ export default {
     },
     props: {
         games: Array,
-        round: Number,
+        round: String,
     },
     components: {
         TournamentBracketElement,
