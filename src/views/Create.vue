@@ -105,7 +105,7 @@ export default {
         console.log(res.data);
         localStorage.setItem("tournament", JSON.stringify(res.data.data));
         localStorage.setItem("creator", "true");
-        this.$router.push("/");
+        this.$router.push("/lobby");
       })
       .catch((err) => {
         console.error(err);

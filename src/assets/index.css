@@ -46,11 +46,6 @@ label {
     @apply px-1 inline-block bg-secondary text-primary-dark
 }
 
-.first-score::after {
-    content: ":";
-    padding-left: 0.75rem;
-}
-
 .round-collapse {
     @apply mb-2 w-5/6 mx-auto flex justify-between px-2 rounded-sm bg-tertiary-dark
 }

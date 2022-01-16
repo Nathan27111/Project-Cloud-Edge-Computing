@@ -11,8 +11,6 @@
       <div class="flex flex-col justify-evenly items-center mx-3">
         <h1 class="text-2xl text-center mb-2">You can start the tournament when all players have joined</h1>
         <h2>Current players: {{ playersJoined }}/{{ playerAmount }}</h2>
-        <button class="btn" v-if="isActive" @click="refresh">Refresh</button>
-        <p v-else class="mt-3">Wait 30 seconds to refresh again</p>
         <button class="btn" v-if="isReady" @click="startTournament">Start</button>
       </div>
 
@@ -76,32 +74,25 @@ export default {
       if (localStorage.getItem("player") != null) {
         this.hasJoined = true;
       }
+      this.refresh();
+      setInterval(() => {
+        this.refresh();
+      }, 5000)
     },
 
     methods: {
       async refresh() {
-        const localTournament = JSON.parse(localStorage.getItem("tournament"));
-        const tournament = await axios.get(process.env.VUE_APP_URL + "/tournaments/" + localTournament.code).catch((err) => console.log(err));
-        const players = await axios.get(process.env.VUE_APP_URL + "/players/tournaments/" + localTournament.id + "?tournamentId=" + localTournament.id).catch((err) => console.log(err));
+        const tournament = await axios.get(process.env.VUE_APP_URL + "/tournaments/" + this.code).catch((err) => console.log(err));
 
-        if (players === undefined) {
-          this.playersJoined = 0;
-        } else {
-          this.playersJoined = players.data.data.length;
-          if (this.playersJoined === this.playerAmount) {
-            this.isReady = true;
-          }
+        this.playersJoined = tournament.data.data.players.length;
+        if (this.playersJoined === tournament.data.data.playerAmount) {
+          this.isReady = true;
         }
 
         if (tournament.data.data.isActive) {
           localStorage.setItem("tournament", JSON.stringify(tournament.data.data));
           this.$router.push("/");
         }
-
-        this.isActive = false;
-        setTimeout(() => {
-          this.isActive = true;
-        }, 30000)
       },
 
       startTournament() {

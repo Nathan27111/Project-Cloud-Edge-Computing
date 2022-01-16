@@ -2,33 +2,34 @@
   <div class="flex flex-col justify-evenly items-center mt-16">
     <div>
       <h1 class="title">{{ tournamentName }}</h1>
-      <h2 class="tournament-code">Code: {{ code }}</h2>
+      <h2 class="tournament-code">Code: <span class="text-tertiary-light font-bold">{{ code }}</span></h2>
     </div>
 
-    <div id="round-1" class="w-full">
-      <TournamentBracketRound :title="'Round 1'" />
-    </div>
-    <div id="round-2">
-
-    </div>
-    <div id="round-3">
-
+    <div class="w-full">
+      <TournamentBracketRound v-for="(games, index) in rounds" :key="index" :round="index" :games="games"/>
     </div>
   </div>
 </template>
 
 <script>
 import authRedirect from "../mixins/authRedirect";
+import axios from 'axios';
 
 import TournamentBracketRound from "../components/TournamentBracketRound.vue";
 
 export default {
     mixins: [authRedirect],
 
+    components: {
+      TournamentBracketRound,
+    },
+
     data() {
       return {
         code: "XXXXXX",
         tournamentName: "Airhockey Tournament",
+        tournamentId: 0,
+        rounds: {},
       }
     },
 
@@ -37,11 +38,29 @@ export default {
         let tournament = JSON.parse(localStorage.getItem("tournament"));
         this.tournamentName = tournament.name;
         this.code = tournament.code;
+        this.tournamentId = tournament.id;
       }
+      this.getGames();
+      setInterval(() => {
+        this.getGames();
+      }, 20000)
     },
 
-    components: {
-      TournamentBracketRound,
+    methods: {
+      getGames() {
+        axios.get(process.env.VUE_APP_URL + "/games/tournaments/" + this.tournamentId)
+        .then((res) => {
+          this.rounds = {};
+          for (let i = 0; i < res.data.data.length; i++) {
+            let roundIndex = res.data.data[i].round;
+            if (this.rounds[roundIndex] === undefined) {
+              this.rounds[roundIndex] = [res.data.data[i]];
+            } else {
+              this.rounds[roundIndex].push(res.data.data[i]);
+            }
+          }
+        }).catch((err) => console.log(err));
+      }
     },
 };
 </script>
