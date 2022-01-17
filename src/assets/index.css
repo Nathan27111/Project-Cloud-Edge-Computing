@@ -10,6 +10,10 @@ body {
     @apply px-20 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase;
 }
 
+.btn-small {
+    @apply px-10 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase;
+}
+
 .title {
     @apply text-center text-4xl px-2 pt-16 mb-2 bg-no-repeat bg-top;
     background-image: url("./logo.svg");
@@ -66,6 +70,24 @@ label {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+.rules-overlay, .leave-overlay {
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    @apply fixed w-full h-full top-0 bottom-0 left-0 right-0;
+}
+
+.rules {
+    @apply h-3/5 w-4/5 max-w-xs bg-primary-dark mx-auto my-14 rounded-xl p-6 text-center;
+}
+
+.rules ul li {
+    @apply mb-2;
+}
+
+.leave-popup {
+    @apply h-1/4 w-4/5 max-w-xs bg-primary-dark mx-auto my-52 rounded-xl p-6 text-center;
 }
 
 /* CREATE TOURNAMENT FORM */
