@@ -68,6 +68,9 @@ export default {
     created() {
       if (localStorage.getItem("tournament") != null) {
         let tournament = JSON.parse(localStorage.getItem("tournament"));
+        if (!tournament.isActive) {
+          this.$router.push("/lobby");
+        }
         this.tournamentName = tournament.name;
         this.code = tournament.code;
         this.tournamentId = tournament.id;

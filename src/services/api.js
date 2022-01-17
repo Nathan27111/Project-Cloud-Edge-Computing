@@ -13,5 +13,12 @@ export default {
             .then(res => {
                 return res.data.data;
             });
+    },
+
+    activateTournament(code) {
+        return axios.put("/tournaments/" + code)
+            .then((res) => {
+                return res;
+            });
     }
 }
