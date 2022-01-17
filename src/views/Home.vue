@@ -10,20 +10,32 @@
         <TournamentBracketRound v-for="(games, index) in rounds" :key="index" :round="index" :games="games"/>
       </div>
     </div>
+    
     <div class="w-full">
         <div class="flex justify-center w-11/12 max-w-lg m-auto">
-          <button @click="toggleRules" class="px-10 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase">Rules</button>
-          <button class="px-10 py-3 m-4 rounded-lg text-center bg-tertiary-dark uppercase">Leave</button>
+          <button @click="toggleRules" class="btn-small">Rules</button>
+          <button @click="toggleLeave" class="btn-small">Leave</button>
         </div>
     </div>    
+    
     <div class="rules-overlay" v-if="showRules" @click="toggleRules">
       <div class="rules">
-        <h1 class="font-bold mb-3">Airhockey Rules</h1>
-        <ul class="list-disc text-sm">
-          <li>First to score 7 goals wins</li>
-          <li>When you cross the middle line with your puck, you get a strike</li>
-          <li>Three strikes and you lose</li>
+        <h1 class="font-bold mb-5 text-lg text-tertiary-light">Airhockey Rules</h1>
+        <ul class="list-disc text-sm text-left">
+          <li>First to score <b>7 goals</b> wins</li>
+          <li>When you cross the middle line with your mallet, you get a strike</li>
+          <li><b>3 strikes</b> and you lose</li>
         </ul>
+      </div>
+    </div>
+
+    <div class="leave-overlay" v-if="showLeave">
+      <div class="leave-popup">
+        <h1 class="mb-2">Are you sure you want to leave this tournament?</h1>
+        <div class="flex justify-center">
+          <button @click="leaveTournament" class="btn-small">Yes</button>
+          <button @click="toggleLeave" class="btn-small">No</button>
+        </div>
       </div>
     </div>
   </div>
@@ -48,6 +60,7 @@ export default {
         tournamentName: "Airhockey Tournament",
         tournamentId: 0,
         showRules: false,
+        showLeave: false,
         rounds: {},
       }
     },
@@ -82,6 +95,13 @@ export default {
       },
       toggleRules() {
         this.showRules = !this.showRules;
+      },
+      toggleLeave() {
+        this.showLeave = !this.showLeave;
+      },
+      leaveTournament() {
+        localStorage.clear();
+        this.$router.push("/login");
       }
     },
 };
