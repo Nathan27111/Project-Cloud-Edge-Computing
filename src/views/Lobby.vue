@@ -96,8 +96,7 @@ export default {
 
       startTournament() {
         api.activateTournament(this.code)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.$router.push("/");
         })
         .catch((err) => console.log(err));
@@ -119,7 +118,7 @@ export default {
           }, 3000)
           console.error(err.response.data.message);
         })        
-        
+
         if (player !== undefined) {
           localStorage.setItem("player", JSON.stringify(player));
           this.hasJoined = true;

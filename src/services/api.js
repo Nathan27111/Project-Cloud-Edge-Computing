@@ -18,7 +18,14 @@ export default {
     activateTournament(code) {
         return axios.put("/tournaments/" + code)
             .then((res) => {
-                return res;
+                return res.data.data;
+            });
+    },
+
+    getGames(tournamentId) {
+        return axios.get("/games/tournaments/" + tournamentId)
+            .then((res) => {
+                return res.data.data;
             });
     }
 }
