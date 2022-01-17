@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '../services/api';
 export default {
   data() {
     return {
@@ -38,19 +38,19 @@ export default {
 
   methods: {
     join() {
-      axios.get(process.env.VUE_APP_URL + "/tournaments/" + this.code)
-      .then((res) => {
-        localStorage.setItem("code", this.code);
-        localStorage.setItem("tournamentName", res.data.data.name);
-        this.$router.push("/join");
-      })
-      .catch(err => {
-        this.showError = true;
-        setTimeout(() => {
-          this.showError = false;
-        }, 3000)
-        console.error(err)
-      });
+      api.getTournament(this.code)
+        .then((res) => {
+          localStorage.setItem("code", res.code);
+          localStorage.setItem("tournamentName", res.name);
+          this.$router.push("/join");
+        })
+        .catch(err => {
+          this.showError = true;
+          setTimeout(() => {
+            this.showError = false;
+          }, 3000)
+          console.error(err)
+        });
     },
 
     create() {

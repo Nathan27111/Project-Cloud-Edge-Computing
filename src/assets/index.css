@@ -33,7 +33,7 @@ label {
 }
 
 .error-message {
-    @apply text-tertiary-dark
+    @apply text-tertiary-dark text-center;
 }
 
 /* Tournament bracket */

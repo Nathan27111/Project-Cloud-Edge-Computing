@@ -3,8 +3,6 @@
     <div v-if="!isCreator">
       <h1 class="text-4xl text-center mt-40 mb-6">Waiting for tournament to start...</h1>
       <h2>Current players: {{ playersJoined }}/{{ playerAmount }}</h2>
-      <button class="btn" v-if="isActive" @click="refresh">Refresh</button>
-      <p v-else class="mt-3">Wait 30 seconds to refresh again</p>
     </div>
     <div v-else>
       <h1 class="mb-10 mt-4 text-2xl">Code: <span class="text-tertiary-light font-bold">{{code}}</span></h1>
@@ -17,7 +15,7 @@
       <div v-if="!hasJoined" class="flex flex-col justify-evenly items-center mt-16">
         <h1 class="text-xl">Join tournament yourself?</h1>
         <div v-if="showError" class="error-message">
-          <p>A player with the name {{ nickname }} already exists!</p>
+          <p>{{errorMessage}}</p>
         </div>
         <form
           action="#"
@@ -46,7 +44,8 @@
 
 <script>
 import authRedirect from "../mixins/authRedirect";
-import axios from 'axios';
+import api from '../services/api';
+
 export default {
     mixins: [authRedirect],
 
@@ -55,7 +54,7 @@ export default {
         code: "XXXXXX",
         nickname: "",
         showError: false,
-        isActive: true,
+        errorMessage: "",
         playersJoined: 0,
         playerAmount: 0,
         isCreator: false,
@@ -82,22 +81,21 @@ export default {
 
     methods: {
       async refresh() {
-        const tournament = await axios.get(process.env.VUE_APP_URL + "/tournaments/" + this.code).catch((err) => console.log(err));
+        const tournament = await api.getTournament(this.code).catch((err) => console.log(err));
 
-        this.playersJoined = tournament.data.data.players.length;
-        if (this.playersJoined === tournament.data.data.playerAmount) {
+        this.playersJoined = tournament.players.length;
+        if (this.playersJoined === tournament.playerAmount) {
           this.isReady = true;
         }
 
-        if (tournament.data.data.isActive) {
-          localStorage.setItem("tournament", JSON.stringify(tournament.data.data));
+        if (tournament.isActive) {
+          localStorage.setItem("tournament", JSON.stringify(tournament));
           this.$router.push("/");
         }
       },
 
       startTournament() {
-        const tournament = JSON.parse(localStorage.getItem("tournament"));
-        axios.put(process.env.VUE_APP_URL + "/tournaments/" + tournament.code)
+        api.activateTournament(this.code)
         .then(() => {
           this.$router.push("/");
         })
@@ -109,18 +107,20 @@ export default {
           nickname: this.nickname,
           ranking: 1,
           code: this.code
-        })
-        const player = await axios.post(process.env.VUE_APP_URL + "/players", body, {
-          headers: {'content-type': 'application/json'}
-        }).catch((err) => {
+        });
+
+        const player = await api.createPlayer(body)
+        .catch((err) => {
+          this.errorMessage = err.response.data.message;
           this.showError = true;
           setTimeout(() => {
             this.showError = false;
           }, 3000)
-          console.error(err);
-        })
-        localStorage.setItem("player", JSON.stringify(player.data.data));
+          console.error(err.response.data.message);
+        })        
+
         if (player !== undefined) {
+          localStorage.setItem("player", JSON.stringify(player));
           this.hasJoined = true;
         }
     },

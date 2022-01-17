@@ -43,7 +43,7 @@
 
 <script>
 import authRedirect from "../mixins/authRedirect";
-import axios from 'axios';
+import api from '../services/api';
 
 import TournamentBracketRound from "../components/TournamentBracketRound.vue";
 
@@ -67,11 +67,15 @@ export default {
 
     created() {
       if (localStorage.getItem("tournament") != null) {
-        let tournament = JSON.parse(localStorage.getItem("tournament"));
+        const tournament = JSON.parse(localStorage.getItem("tournament"));
+        if (!tournament.isActive) {
+          this.$router.push("/lobby");
+        }
         this.tournamentName = tournament.name;
         this.code = tournament.code;
         this.tournamentId = tournament.id;
       }
+
       this.getGames();
       setInterval(() => {
         this.getGames();
@@ -80,25 +84,28 @@ export default {
 
     methods: {
       getGames() {
-        axios.get(process.env.VUE_APP_URL + "/games/tournaments/" + this.tournamentId)
+        api.getGames(this.tournamentId)
         .then((res) => {
           this.rounds = {};
-          for (let i = 0; i < res.data.data.length; i++) {
-            let roundIndex = res.data.data[i].round;
+          for (let i = 0; i < res.length; i++) {
+            let roundIndex = res[i].round;
             if (this.rounds[roundIndex] === undefined) {
-              this.rounds[roundIndex] = [res.data.data[i]];
+              this.rounds[roundIndex] = [res[i]];
             } else {
-              this.rounds[roundIndex].push(res.data.data[i]);
+              this.rounds[roundIndex].push(res[i]);
             }
           }
         }).catch((err) => console.log(err));
       },
+
       toggleRules() {
         this.showRules = !this.showRules;
       },
+
       toggleLeave() {
         this.showLeave = !this.showLeave;
       },
+
       leaveTournament() {
         localStorage.clear();
         this.$router.push("/login");
