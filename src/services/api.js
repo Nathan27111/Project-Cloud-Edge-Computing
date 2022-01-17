@@ -27,5 +27,12 @@ export default {
             .then((res) => {
                 return res.data.data;
             });
+    },
+
+    createTournament(payload) {
+        return axios.post("/tournaments", payload, {headers: {'content-type': 'application/json'}})
+        .then((res) => {
+            return res.data.data;
+        });
     }
 }

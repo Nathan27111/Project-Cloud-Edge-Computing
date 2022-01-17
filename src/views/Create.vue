@@ -3,7 +3,7 @@
     <h1 class="title">Airhockey Tournament</h1>
     
     <div v-if="showError" class="error-message">
-      <p>Some tables do not exist or are already beeing used in another tournament!</p>
+      <p>{{errorMessage}}</p>
     </div>
 
     <form
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '../services/api';
 export default {
   data() {
     return {
@@ -86,6 +86,7 @@ export default {
       numberOfTables: 1,
       tables: [],
       showError: false,
+      errorMessage: "",
     };
   },
   
@@ -98,26 +99,26 @@ export default {
         tableAmount: this.numberOfTables,
         tables: this.tables
       })
-      axios.post(process.env.VUE_APP_URL + '/tournaments', body, {
-        headers: {'content-type': 'application/json'}
-      })
+      api.createTournament(body)
       .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("tournament", JSON.stringify(res.data.data));
+        localStorage.setItem("tournament", JSON.stringify(res));
         localStorage.setItem("creator", "true");
         this.$router.push("/lobby");
       })
       .catch((err) => {
-        console.error(err);
+        this.errorMessage = err.response.data.message;      
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
         }, 3000)
+        console.error(err.response.data.message);
       });
     },
+
     addTableInput() {
       this.numberOfTables += 1;
     },
+    
     updateTables(value, index) {
       this.tables[index] = parseInt(value);
     },
