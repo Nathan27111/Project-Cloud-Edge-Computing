@@ -39,21 +39,23 @@
       <label for="tables">Entering Table numbers</label>
       <div class="table-inputs">
         <div class="table-input-btn">
-          <button @click.prevent="addTableInput()" class="table-inputs-btn">
+          <button @click.prevent="addTableInput()" class="table-inputs-btn z-10">
             +
           </button>
         </div>
 
-        <input
-          v-for="(n, index) in numberOfTables"
-          :key="index"
+        <div v-for="(n, index) in numberOfTables" :key="index" class="relative">
+          <input          
           type="number"
           class="input"
           name="tables"
           placeholder="3"
           @change="updateTables($event.target.value, index)"
           required
-        />
+          />
+          <div @click.prevent="removeTableInput()" class="table-inputs-btn absolute top-0 right-0">-</div>
+        </div>
+        
       </div>
 
       <input type="submit" class="btn" value="Create" />
@@ -104,6 +106,10 @@ export default {
       this.numberOfTables += 1;
     },
     
+    removeTableInput() {
+      this.numberOfTables -= 1;
+    },
+
     updateTables(value, index) {
       this.tables[index] = parseInt(value);
     },
