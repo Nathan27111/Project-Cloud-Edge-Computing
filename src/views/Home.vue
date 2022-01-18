@@ -74,12 +74,12 @@ export default {
         this.tournamentName = tournament.name;
         this.code = tournament.code;
         this.tournamentId = tournament.id;
-      }
 
-      this.getGames();
-      setInterval(() => {
         this.getGames();
-      }, 20000)
+          setInterval(() => {
+            this.getGames();
+        }, 20000)
+      }
     },
 
     methods: {

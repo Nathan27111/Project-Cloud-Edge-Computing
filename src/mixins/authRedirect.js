@@ -1,5 +1,5 @@
 export default {
-    created() {
+    beforeCreate() {
         if (!localStorage.tournament) {
             this.$router.push("/login");
         }
