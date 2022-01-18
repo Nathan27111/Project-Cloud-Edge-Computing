@@ -22,20 +22,6 @@
         required
       />
 
-      <label for="time-match">Time single match (Minutes)</label>
-      <input
-        type="number"
-        v-model="timeSingleMatch"
-        class="input"
-        id="time-match"
-        name="time-match"
-        placeholder="10"
-        required
-      />
-
-      <!-- <label for="score">Winning score</label>
-      <input type="number" class="input" id="score" name="score" placeholder="7" required> -->
-
       <label for="player-count">Amount of players</label>
       <select
         v-model="amountOfPlayers"
@@ -53,21 +39,23 @@
       <label for="tables">Entering Table numbers</label>
       <div class="table-inputs">
         <div class="table-input-btn">
-          <button @click.prevent="addTableInput()" class="table-inputs-btn">
+          <button @click.prevent="addTableInput()" class="table-inputs-btn z-10">
             +
           </button>
         </div>
 
-        <input
-          v-for="(n, index) in numberOfTables"
-          :key="index"
+        <div v-for="(n, index) in numberOfTables" :key="index" class="relative">
+          <input          
           type="number"
           class="input"
           name="tables"
           placeholder="3"
           @change="updateTables($event.target.value, index)"
           required
-        />
+          />
+          <div @click.prevent="removeTableInput()" class="table-inputs-btn absolute top-0 right-0">-</div>
+        </div>
+        
       </div>
 
       <input type="submit" class="btn" value="Create" />
@@ -81,7 +69,6 @@ export default {
   data() {
     return {
       tournamentName: "",
-      timeSingleMatch: 0,
       amountOfPlayers: 0,
       numberOfTables: 1,
       tables: [],
@@ -94,7 +81,7 @@ export default {
     create() {
       const body = JSON.stringify({
         name: this.tournamentName,
-        timePerMatch: this.timeSingleMatch,
+        timePerMatch: 7,
         playerAmount: parseInt(this.amountOfPlayers),
         tableAmount: this.numberOfTables,
         tables: this.tables
@@ -119,6 +106,10 @@ export default {
       this.numberOfTables += 1;
     },
     
+    removeTableInput() {
+      this.numberOfTables -= 1;
+    },
+
     updateTables(value, index) {
       this.tables[index] = parseInt(value);
     },
