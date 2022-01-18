@@ -22,20 +22,6 @@
         required
       />
 
-      <label for="time-match">Time single match (Minutes)</label>
-      <input
-        type="number"
-        v-model="timeSingleMatch"
-        class="input"
-        id="time-match"
-        name="time-match"
-        placeholder="10"
-        required
-      />
-
-      <!-- <label for="score">Winning score</label>
-      <input type="number" class="input" id="score" name="score" placeholder="7" required> -->
-
       <label for="player-count">Amount of players</label>
       <select
         v-model="amountOfPlayers"
@@ -81,7 +67,6 @@ export default {
   data() {
     return {
       tournamentName: "",
-      timeSingleMatch: 0,
       amountOfPlayers: 0,
       numberOfTables: 1,
       tables: [],
@@ -94,7 +79,7 @@ export default {
     create() {
       const body = JSON.stringify({
         name: this.tournamentName,
-        timePerMatch: this.timeSingleMatch,
+        timePerMatch: 7,
         playerAmount: parseInt(this.amountOfPlayers),
         tableAmount: this.numberOfTables,
         tables: this.tables
